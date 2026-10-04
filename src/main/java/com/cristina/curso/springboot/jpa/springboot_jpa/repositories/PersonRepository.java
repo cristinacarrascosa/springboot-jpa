@@ -12,8 +12,8 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     List<Person> findByProgrammingLanguage(String programmingLanguage);
 
     // Custom query using JPQL
-    @Query("SELECT p FROM Person p")
-    List<Person> buscarByProgrammingLanguageCustomQuery(String programmingLanguage);
+    @Query("SELECT p FROM Person p where p.programmingLanguage = ?1 and p.name = ?2")
+    List<Person> buscarByProgrammingLanguageCustomQuery(String programmingLanguage, String name);
 
 
 
