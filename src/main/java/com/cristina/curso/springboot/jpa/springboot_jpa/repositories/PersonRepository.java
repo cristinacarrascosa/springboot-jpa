@@ -1,6 +1,7 @@
 package com.cristina.curso.springboot.jpa.springboot_jpa.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -28,6 +29,8 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
      @Query ("SELECT p.name, p.programmingLanguage FROM Person p WHERE p.programmingLanguage = ?1")
     List<Object[]> obtenerPersonDataByProgrammingLanguage(String programmingLanguage);
 
+    // Con estas consultas devolvemos un solo objeto, no una lista de objetos
+    
 
 
 
