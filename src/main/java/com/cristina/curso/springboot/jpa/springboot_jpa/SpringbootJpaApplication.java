@@ -1,6 +1,7 @@
 package com.cristina.curso.springboot.jpa.springboot_jpa;
 
 import java.util.List;
+import java.util.Scanner;
 
 import org.hibernate.internal.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +38,26 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	public void create(){
 
-		Person person = new Person(null ,"Lalo", "Thor", "Phyton");
+		Scanner scanner = new Scanner(System.in);
+		String name = scanner.next();
+		String lastName = scanner.next();
+		String programmingLanguage = scanner.next();
+		scanner.close();
+
+		Person person = new Person(null, name, lastName, programmingLanguage);
+
+		//Person person = new Person(null ,"Lalo", "Thor", "Phyton");
 		
 		Person personNew = personRepository.save(person);
 		System.out.println("Person created: " + personNew);
+
+		// esto es una expresion lambda, es una manera de recorrer la lista de personas y mostrarla por consola
+		//personRepository.findById(personNew.getId()).ifPresent(p -> System.out.println(p));
+
+		// esto es una manera más simplificada de hacer lo mismo que el bloque anterior
+		personRepository.findById(personNew.getId()).ifPresent(System.out::println);
+
+
 
 	}
 
