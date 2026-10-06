@@ -31,7 +31,17 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		//list();
-		findOne();
+		//findOne();
+		create();
+	}
+
+	public void create(){
+
+		Person person = new Person(null ,"Lalo", "Thor", "Phyton");
+		
+		Person personNew = personRepository.save(person);
+		System.out.println("Person created: " + personNew);
+
 	}
 
 	public void findOne(){
