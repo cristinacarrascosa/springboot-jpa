@@ -1,13 +1,14 @@
 package com.cristina.curso.springboot.jpa.springboot_jpa;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
-import org.hibernate.internal.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cristina.curso.springboot.jpa.springboot_jpa.entities.Company;
 import com.cristina.curso.springboot.jpa.springboot_jpa.entities.Person;
@@ -33,14 +34,63 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		//list();
 		//findOne();
-		create();
+		//create();
+		//update();
+		//delete();
 	}
 
+	@Transactional 
+	public void delete(){
+		personRepository.findAll().forEach(System.out::println);
+
+
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Ingrese el id de la persona a eliminar: ");
+		Long id = scanner.nextLong();
+		personRepository.deleteById(id);
+
+		personRepository.findAll().forEach(System.out::println);
+		
+
+		scanner.close();
+	}
+
+	@Transactional 
+	public void update(){
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Ingrese el id de la persona: ");
+		Long id = scanner.nextLong();
+
+		Optional <Person> optionalPerson = personRepository.findById(id);
+
+		//optionalPerson.ifPresent(person -> {
+		if(optionalPerson.isPresent()){
+			Person person = optionalPerson.orElseThrow();
+
+			System.out.println("Persona encontrada: " + person);
+			System.out.println("Ingrese el lenguaje de programación: ");
+			String programmingLanguage = scanner.next();
+			person.setProgrammingLanguage(programmingLanguage);
+
+			Person personDB = personRepository.save(person);
+			System.out.println("Person updated: " + personDB);
+		} else {
+			System.out.println("Persona no encontrada!");
+		}
+		//});
+
+		scanner.close();
+	}
+
+	@Transactional 
 	public void create(){
 
 		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter name: ");
 		String name = scanner.next();
+		System.out.println("Enter last name: ");
 		String lastName = scanner.next();
+		System.out.println("Enter programming language: ");
 		String programmingLanguage = scanner.next();
 		scanner.close();
 
@@ -54,13 +104,14 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		// esto es una expresion lambda, es una manera de recorrer la lista de personas y mostrarla por consola
 		//personRepository.findById(personNew.getId()).ifPresent(p -> System.out.println(p));
 
-		// esto es una manera más simplificada de hacer lo mismo que el bloque anterior
+		// esto es una manera más simplificada de hacer lo mismo que el bloque anterior método de referencia
 		personRepository.findById(personNew.getId()).ifPresent(System.out::println);
 
 
 
 	}
 
+	@Transactional(readOnly = true)
 	public void findOne(){
 		//Person person = personRepository.findById(1L).orElseThrow(() -> new RuntimeException("Person not found"));
 
@@ -87,7 +138,8 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		
 	}
 
-	
+	//este transactional es solo de lectura, no se va a modificar la base de datos, solo se va a leer
+	@Transactional(readOnly = true)
 	public void list(){
 		//List<Person> persons = (List<Person>) personRepository.findAll();
 		//List<Person> persons = (List<Person>) personRepository.findByProgrammingLanguage("JavaScript");
