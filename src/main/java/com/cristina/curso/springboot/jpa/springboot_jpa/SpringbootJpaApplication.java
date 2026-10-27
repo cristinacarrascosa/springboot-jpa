@@ -36,11 +36,12 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		//findOne();
 		//create();
 		//update();
-		//delete();
+		delete();
 	}
 
 	@Transactional 
 	public void delete(){
+		//aqui mostramos todas las personas que hay en la base de datos antes de eliminar una
 		personRepository.findAll().forEach(System.out::println);
 
 
@@ -49,9 +50,28 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		Long id = scanner.nextLong();
 		personRepository.deleteById(id);
 
+		//aqui mostramos todas las personas que hay en la base de datos despues de eliminar una
 		personRepository.findAll().forEach(System.out::println);
 		
+		//cerramos el scanner para evitar fugas de memoria, ya que el scanner es un recurso que se abre y se debe cerrar
+		scanner.close();
+	}
 
+	@Transactional 
+	public void delete2(){
+		//aqui mostramos todas las personas que hay en la base de datos antes de eliminar una
+		personRepository.findAll().forEach(System.out::println);
+
+
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Ingrese el id de la persona a eliminar: ");
+		Long id = scanner.nextLong();
+		personRepository.deleteById(id);
+
+		//aqui mostramos todas las personas que hay en la base de datos despues de eliminar una
+		personRepository.findAll().forEach(System.out::println);
+		
+		//cerramos el scanner para evitar fugas de memoria, ya que el scanner es un recurso que se abre y se debe cerrar
 		scanner.close();
 	}
 
