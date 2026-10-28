@@ -12,6 +12,18 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
 
     List<Person> findByProgrammingLanguage(String programmingLanguage);
 
+    // Saca el nombre de la persona a partir del id, pero no devuelve el objeto completo, sino solo el nombre
+    @Query ("SELECT p.name From Person p WHERE p.id = ?1")
+    String getNameById(Long id);
+
+    // Saca el id de la persona a partir del id, pero no devuelve el objeto completo, sino solo el id
+    @Query ("SELECT p.id From Person p WHERE p.id = ?1")
+    Long getIdById(Long id);
+
+    // Saca el nombre completo de la persona a partir del id, pero no devuelve el objeto completo, sino solo el nombre completo
+    @Query ("SELECT CONCAT(p.name, ' ', p.lastName) AS fullName From Person p WHERE p.id = ?1")
+    String getFullNameById(Long id);
+
     // Custom query using JPQL
     @Query("SELECT p FROM Person p where p.programmingLanguage = ?1 and p.name = ?2")
     List<Person> buscarByProgrammingLanguageCustomQuery(String programmingLanguage, String name);
