@@ -12,6 +12,13 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
 
     List<Person> findByProgrammingLanguage(String programmingLanguage);
 
+    // Este es a partir del contructor que hemos creado en la clase Person, y nos devuelve un objeto de tipo Person
+    @Query ("SELECT new Person(p.name, p.lastName) FROM Person p ")
+    List<Person> findAllObjectPersonPersonalized();
+
+    @Query ("SELECT p, p.programmingLanguage FROM Person p ")
+    List<Object[]> findAllMixPerson();
+
     @Query ("SELECT p.id, p.name, p.lastName, p.programmingLanguage FROM Person p ")
     List<Object[]> obtenerPersonDataList();
 
