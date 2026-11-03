@@ -8,7 +8,13 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.cristina.curso.springboot.jpa.springboot_jpa.entities.Person;
 
+import dto.PersonDto;
+
 public interface PersonRepository extends CrudRepository<Person, Long> {
+
+    @Query ("SELECT new dto.PersonDto(p.name, p.lastName) FROM Person p ")
+    List<PersonDto> findAllPersonDto();
+
 
     List<Person> findByProgrammingLanguage(String programmingLanguage);
 

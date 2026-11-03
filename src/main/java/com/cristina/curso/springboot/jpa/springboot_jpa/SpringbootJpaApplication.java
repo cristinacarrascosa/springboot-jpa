@@ -15,6 +15,8 @@ import com.cristina.curso.springboot.jpa.springboot_jpa.entities.Person;
 import com.cristina.curso.springboot.jpa.springboot_jpa.repositories.CompanyRepository;
 import com.cristina.curso.springboot.jpa.springboot_jpa.repositories.PersonRepository;
 
+import dto.PersonDto;
+
 @SpringBootApplication
 public class SpringbootJpaApplication implements CommandLineRunner {
 
@@ -47,6 +49,10 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println("=================== consulta que puegla y devuelve objeto entity de una instancia personalizada ===================");
 		List<Person> persons = personRepository.findAllObjectPersonPersonalized();
 		persons.forEach(System.out::println);
+
+		System.out.println("=================== consulta que puegla y devuelve objeto Dto de una clase personalizada ===================");
+		List<PersonDto> personsDto = personRepository.findAllPersonDto();
+		personsDto.forEach(System.out::println);
 
 	}
 
