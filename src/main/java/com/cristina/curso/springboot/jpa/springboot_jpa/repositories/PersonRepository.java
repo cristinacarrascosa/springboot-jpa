@@ -12,6 +12,18 @@ import dto.PersonDto;
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
+    @Query ("SELECT COUNT(DISTINCT p.programmingLanguage) FROM Person p")
+    List<Long> findAllDistinctCountProgrammingLanguages();
+
+    @Query ("SELECT DISTINCT p.programmingLanguage FROM Person p")
+    List<String> findAllDistinctProgrammingLanguages();
+
+    @Query ("SELECT p.name FROM Person p")
+    List<String> findAllNames();
+
+    @Query ("SELECT DISTINCT p.name FROM Person p")
+    List<String> findAllDistinctNames();
+
     @Query ("SELECT new dto.PersonDto(p.name, p.lastName) FROM Person p ")
     List<PersonDto> findAllPersonDto();
 
