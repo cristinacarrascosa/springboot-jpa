@@ -35,8 +35,31 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		personalizedQueriesDistinct();
+		personalizedQueriesCase();
 	}
+
+	@Transactional (readOnly = true)
+	public void personalizedQueriesCase(){
+		
+		System.out.println("=================== consulta personalizada por nombre completo ===================");
+		List<String> personsFullNames = personRepository.findAllFullNames();
+		personsFullNames.forEach(System.out::println);
+
+		System.out.println("=================== consulta personalizada por nombre completo en mayusculas ===================");
+		personsFullNames = personRepository.findAllFullNamesUpper();
+		personsFullNames.forEach(System.out::println);
+
+		System.out.println("=================== consulta personalizada por nombre completo en minusculas ===================");
+		personsFullNames = personRepository.findAllFullNamesLower();
+		personsFullNames.forEach(System.out::println);
+
+		System.out.println("=================== consulta personalizada por nombre completo en mayusculas y minusculas ===================");
+		List<Object[]> personsFullNamesCase = personRepository.findPersonDataListCase();
+		personsFullNamesCase.forEach(data -> {
+			System.out.println("id: " + data[0] + " " + data[1] + " " + data[2] + " " + data[3]);
+		});
+	}
+		
 
 	@Transactional (readOnly = true)
 	public void personalizedQueriesDistinct(){

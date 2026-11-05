@@ -12,6 +12,19 @@ import dto.PersonDto;
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
+    @Query ("SELECT p.id, upper(p.name), lower(p.lastName), upper(p.programmingLanguage) FROM Person p ")
+    List<Object[]>findPersonDataListCase();
+
+    @Query ("SELECT upper(CONCAT(p.name, ' ', p.lastName)) FROM Person p")
+    List<String> findAllFullNamesUpper();
+
+    @Query ("SELECT lower (p.name || ' ' ||p.lastName) FROM Person p")
+    List<String> findAllFullNamesLower();
+
+    //@Query ("SELECT CONCAT(p.name, ' ', p.lastName) FROM Person p")
+    @Query ("SELECT p.name || ' ' ||p.lastName FROM Person p")
+    List<String> findAllFullNames();
+
     @Query ("SELECT COUNT(DISTINCT p.programmingLanguage) FROM Person p")
     List<Long> findAllDistinctCountProgrammingLanguages();
 
