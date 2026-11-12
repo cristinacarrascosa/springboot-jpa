@@ -12,6 +12,14 @@ import dto.PersonDto;
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
+    List<Person> findByIdBetween(Integer c1, Integer c2);
+    List<Person> findByNameBetween(String c1, String c2);
+    @Query ("SELECT p FROM Person p where p.name between ?1 and ?2")
+    List<Person> findAllByNameBetween(String startnameString, String endString);
+
+    @Query ("SELECT p FROM Person p where p.id between ?1 and ?2")
+    List<Person> findAllByIdBetween(Integer start, Integer end);
+
     @Query ("SELECT p.id, upper(p.name), lower(p.lastName), upper(p.programmingLanguage) FROM Person p ")
     List<Object[]>findPersonDataListCase();
 
